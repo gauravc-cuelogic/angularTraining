@@ -7,17 +7,19 @@
         <div role="tabpanel" class="tab-pane active" id="home">
             <table class="table table-striped">
                 <thead>
-                    <th>Image</th>
                     <th>Employee Name </th>
-                    <th>Department Name</th>
-                    <th>salary</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Education</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="singleUser in getUsers">
-                        <td><img height="100" width="100" src="{{blackSpinner}}" lazy-img="{{singleUser.image}}"></td>
-                        <td>{{singleUser.name}}</td>
-                        <td>{{singleUser.department}}</td>
-                        <td>${{singleUser.salary}}</td>
+                    <tr ng-repeat="singleEmp in getEmp" ui-sref="base.user({Id: {{singleEmp.id}} })" role="button">
+                        <td>{{singleEmp.first_name + ' ' + singleEmp.last_name}}</td>
+                        <td>{{singleEmp.gender}}</td>
+                        <td>{{singleEmp.address}}</td>
+                        <td>{{singleEmp.email}}</td>
+                        <td>{{singleEmp.education}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -4,14 +4,14 @@
 
     angular
         .module('dashboard')
-        .controller('dashboardController', ['$scope', '$state', 'dashboardService', dashboardController]);
+        .controller('dashboardController', ['$scope', '$state', 'employeeService', dashboardController]);
 
-    function dashboardController($scope, $state, dashboardService) {
-        $scope.blackSpinner = 'resource/images/blackSpinner.gif';
+    function dashboardController($scope, $state, employeeService) {
 
-        $scope.userList = function() {
+      //  $scope.employeeList = function() {
             //calling API and get user list
-            $scope.getUsers = dashboardService.getUserList().userDetails;
+            $scope.getEmp = employeeService.getEmpList().empDetails;
+            console.log($scope.getEmp);
             $scope.subTabMenus = [{
                 'tabMenu': 'All',
                 'action': 'dashboard'
@@ -19,7 +19,7 @@
                 'tabMenu': 'Proposals',
                 'action': 'proposals'
             }]
-        }
+      //  }
     }
 
 })();

@@ -44715,6 +44715,7 @@ angular
             'ui.bootstrap',
             'localStorage.service',
             'loginService.service',
+            'employee.service',
             'config',
             'auth',
             'base',
@@ -44832,10 +44833,19 @@ angular.module('user', []);
 
         $stateProvider
             .state('base.user', {
-                url: '/add/user',
+                url: '/add/user?Id',
                 views: {
                     'content': {
                         templateUrl: 'app/modules/user/views/add_user.html',
+                        controller: 'userController'
+                    }
+                }
+            })
+            .state('base.user_edit', {
+                url: '/add/user_edit',
+                views: {
+                    'content': {
+                        templateUrl: 'app/modules/user/views/edit_user.html',
                         controller: 'userController'
                     }
                 }
@@ -44922,14 +44932,14 @@ function sidebarMenu() {
 
     angular
         .module('dashboard')
-        .controller('dashboardController', ['$scope', '$state', 'dashboardService', dashboardController]);
+        .controller('dashboardController', ['$scope', '$state', 'employeeService', dashboardController]);
 
-    function dashboardController($scope, $state, dashboardService) {
-        $scope.blackSpinner = 'resource/images/blackSpinner.gif';
+    function dashboardController($scope, $state, employeeService) {
 
-        $scope.userList = function() {
+      //  $scope.employeeList = function() {
             //calling API and get user list
-            $scope.getUsers = dashboardService.getUserList().userDetails;
+            $scope.getEmp = employeeService.getEmpList().empDetails;
+            console.log($scope.getEmp);
             $scope.subTabMenus = [{
                 'tabMenu': 'All',
                 'action': 'dashboard'
@@ -44937,7 +44947,7 @@ function sidebarMenu() {
                 'tabMenu': 'Proposals',
                 'action': 'proposals'
             }]
-        }
+      //  }
     }
 
 })();
@@ -44947,10 +44957,16 @@ function sidebarMenu() {
 
     angular
         .module('user')
-        .controller('userController', ['$scope', userController]);
+        .controller('userController', ['$scope', '$stateParams', 'employeeService' ,userController]);
 
-    function userController($scope) {
+    function userController($scope, $stateParams, employeeService) {
+      if($stateParams.Id) {
+        $scope = employeeService.getEmpList($stateParams.Id);
+        $scope.setTitle = 'Edit user';
+        console.log($scope);
+      }else{
         $scope.setTitle = 'Add user';
+      }
     }
 
 })();
@@ -45019,6 +45035,65 @@ function dashboardService($http) {
                 "image": "resource/images/ipgeo.png"
             }]
         }
+    }
+    //END
+};
+
+angular.module('employee.service', [])
+    .factory('employeeService', [employeeService]);
+
+
+
+function employeeService() {
+    var service = {};
+    var empData = {
+        "empDetails":[
+          {
+              "id": 0,
+              "first_name": "Gaurav",
+              "last_name": "Chauriya",
+              "address": "Pune, India.",
+              "email": "gaurav@gmail.com",
+              "age": "26",
+              "gender": "Male",
+              "education": "MCA"
+          },
+          {
+            "id": 1,
+            "first_name": "Jai",
+            "last_name": "Kataria",
+            "address": "Pune, India.",
+            "email": "jai@gmail.com",
+            "age": "27",
+            "gender": "Male",
+            "education": "MCA"
+          },
+          {
+            "id": 2,
+            "first_name": "Shayam",
+            "last_name": "Sapate",
+            "address": "Pune, India.",
+            "email": "shayam@gmail.com",
+            "age": "25",
+            "gender": "Male",
+            "education": "B.E"
+          },
+          {
+            "id": 3,
+            "first_name": "Sagar",
+            "last_name": "Bhamre",
+            "address": "Pune, India.",
+            "email": "sagar@gmail.com",
+            "age": "26",
+            "gender": "Male",
+            "education": "MCA"
+          }]};
+    service.getEmpList = getEmpList;
+
+    return service;
+
+    function getEmpList(id) {
+      return id === undefined ? empData : empData.empDetails[id];
     }
     //END
 };
