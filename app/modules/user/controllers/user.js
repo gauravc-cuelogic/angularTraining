@@ -7,11 +7,15 @@
 
     function userController($scope, $stateParams, employeeService) {
       if($stateParams.Id) {
-        $scope = employeeService.getEmpList($stateParams.Id);
         $scope.setTitle = 'Edit user';
-        console.log($scope);
+        $scope.empData = employeeService.getEmpList($stateParams.Id);
       }else{
         $scope.setTitle = 'Add user';
+      }
+
+      $scope.submit = function(id){
+        console.log($scope.first_name);
+        //employeeService.updateEmpList(id,)
       }
     }
 

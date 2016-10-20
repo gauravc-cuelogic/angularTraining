@@ -39,20 +39,25 @@ function employeeService() {
           },
           {
             "id": 3,
-            "first_name": "Sagar",
+            "first_name": "Sarika",
             "last_name": "Bhamre",
             "address": "Pune, India.",
             "email": "sagar@gmail.com",
             "age": "26",
-            "gender": "Male",
+            "gender": "Female",
             "education": "MCA"
           }]};
     service.getEmpList = getEmpList;
+    service.updateEmpList = updateEmpList;
 
     return service;
 
     function getEmpList(id) {
       return id === undefined ? empData : empData.empDetails[id];
+    }
+
+    function updateEmpList(id,data){
+      empData.empDetails[id] = data;
     }
     //END
 };
